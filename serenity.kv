@@ -1,0 +1,676 @@
+WindowManager:
+    Login:
+    MainScreen:
+    Properties:
+    PriceGenerator:
+    DataExplorer:
+    DataKMeans:
+    AddNewUser:
+    TrainModel:
+
+
+<Login>
+    name: 'login'
+    username: username
+    password: password
+    verification: verification
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'app_images/house_login.jpg'
+    FloatLayout:
+        GridLayout:
+            cols: 2
+            row_force_default: True
+            row_default_height: 40
+            pos: -50, -200
+            Label:
+                markup: True
+                text: "[color=#8cfa8e]                  Username[/color]"
+                font_size: 26
+            TextInput:
+                id: username
+                multiline:False
+
+            Label:
+                markup: True
+                text: "[color=#8cfa8e]                  Password[/color]"
+                font_size: 26
+            TextInput:
+                id: password
+                multiline:False
+
+
+        Button:
+            markup: True
+            text: "[color=#8cfa8e]Sign In[/color]"
+            size_hint_y: None
+            height: 50
+            size_hint_x: None
+            width: 200
+            pos_hint: {'x': 0.69, 'y': 0.4}
+
+
+            on_press: root.btn()
+            on_release:
+
+                app.root.current = 'main' if verification.text == 'validated' else 'login'
+                root.reset()
+        Label:
+
+
+        Label:
+            text: ''
+            size_hint_y: None
+            height: 0
+            size_hint_x: None
+            width: 0
+        Label:
+            id: verification
+            text: ''
+            size_hint_y: None
+            height: 0
+            size_hint_x: None
+            width: 0
+            pos_hint: {'x': 1, 'y': 1}
+
+
+
+
+
+<AddNewUser>
+    name: 'user'
+    FloatLayout:
+        GridLayout:
+            cols: 2
+            row_force_default: True
+            row_default_height: 40
+            pos: -50, -200
+            Label:
+                markup: True
+                text: '[color=#8cfa8e]Name: [/color]'
+            TextInput:
+                id: employee_name
+                multiline: False
+            Label:
+                markup: True
+                text: '[color=#8cfa8e]Username: [/color]'
+            TextInput:
+                id: username
+                multiline: False
+            Label:
+                markup: True
+                text: '[color=#8cfa8e]Password: [/color]'
+            TextInput:
+                id: password
+                multiline: False
+
+            Label:
+                text: ''
+            Button:
+                markup: True
+                text: '[color=#8cfa8e]Add New User[/color]'
+                size_hint: (None, None)
+                width: 200
+                height: 25
+                pos: 50, 500
+                on_press:
+
+                    root.add_user()
+                    app.root.current = "main"
+                    root.manager.transition.direction = 'right'
+        Button:
+            markup: True
+            text: '[color=#8cfa8e]Go back[/color]'
+            pos_hint: {"x": 0}
+            size_hint_y: None
+            height: 50
+            size_hint_x: None
+            width: 200
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = 'right'
+
+
+
+
+<MainScreen>
+    name: 'main'
+    welcome_message: welcome_message
+
+
+    FloatLayout:
+        Image:
+            source: 'app_images/serenitylogo.png'
+            pos: 0, 200
+
+        Label:
+            markup: True
+            font_size: 25
+            text: "[color=#a7edbf][i][font=times]Premier Living in Seattle[/font][/i][/color]"
+            pos: 0, 100
+
+        Image:
+            source: 'app_images/house_main.jpg'
+            size_hint: (None, None)
+            width: 450
+            height: 350
+            pos_hint: {'x': 0.34, 'y': 0.08}
+
+
+
+
+        Label:
+            markup: True
+            id: welcome_message
+            text: "[color=#8cfa8e]Welcome![/color]"
+            size_hint: (None, None)
+            width: 200
+            height: 50
+            pos: 0, 300
+
+        Button:
+            markup: True
+            id: generate
+            text: '[color=#8cfa8e]Price Quote[/color]'
+            size_hint: (None, None)
+            width: 200
+            height: 50
+            pos: 0, 250
+            on_release:
+                app.root.current = 'price'
+                root.manager.transition.direction = 'left'
+
+
+        Button:
+            markup: True
+            text: '[color=#8cfa8e]Properties[/color]'
+            size_hint: (None, None)
+            width: 200
+            height: 50
+            pos: 0, 200
+            on_release:
+                app.root.current = "properties"
+                root.manager.transition.direction = 'left'
+
+        Button:
+            markup: True
+            text: '[color=#8cfa8e]Explore the Data[/color]'
+            size_hint: (None, None)
+            width: 200
+            height: 50
+            pos: 0, 150
+            on_release:
+                app.root.current = "data"
+                root.manager.transition.direction = 'left'
+
+        Button:
+            markup: True
+            text: '[color=#8cfa8e]Add New User[/color]'
+            size_hint: (None, None)
+            width: 200
+            height: 50
+            pos: 0, 100
+            on_release:
+                app.root.current = "user"
+                root.manager.transition.direction = 'left'
+        Button:
+            markup: True
+            text: '[color=#8cfa8e]Train New Model[/color]'
+            size_hint: (None, None)
+            width: 200
+            height: 50
+            pos: 0, 50
+            on_release:
+                app.root.current = "train"
+                root.manager.transition.direction = 'left'
+        Button:
+            markup: True
+            text: '[color=#8cfa8e]Log Out[/color]'
+            size_hint: (None, None)
+            width: 200
+            height: 50
+            pos: 0, 0
+            on_release:
+                app.root.current = "login"
+                root.manager.transition.direction = 'right'
+
+
+<Properties>
+    name: 'properties'
+
+    BoxLayout:
+        size_hint: 1,.1
+        orientation: "horizontal"
+        Button:
+            markup: True
+            text:"[color=#8cfa8e]Go back[/color]"
+            size_hint: (None, None)
+            width: 200
+            height: 50
+
+            on_release:
+                app.root.current = 'main'
+                root.manager.transition.direction = 'right'
+
+        ScrollView:
+            GridLayout:
+
+                size_hint_y: None
+                height: self.minimum_height  #<<<<<<<<<<<<<<<<<<<<
+                row_default_height: 60
+                cols:1
+
+
+
+
+
+
+
+
+<PriceGenerator>
+    name: 'price'
+    bedrooms: bedrooms
+    bathrooms: bathrooms
+    sqft_living: sqft_living
+    sqft_lot: sqft_lot
+    floors: floors
+    waterfront: waterfront
+    view: view
+    condition: condition
+    grade: grade
+    year_built: year_built
+    year_renovated: year_renovated
+    zip: zip
+
+    FloatLayout:
+
+        GridLayout:
+            cols: 2
+            row_force_default: True
+            row_default_height: 40
+
+            Label:
+                markup: True
+                text: "[color=#8cfa8e]How many bedrooms? -->[/color]"
+            TextInput:
+                id: bedrooms
+                multiline:False
+
+            Label:
+                markup: True
+                text: "[color=#8cfa8e]How many bathrooms? -->[/color]"
+            TextInput:
+                id: bathrooms
+                multiline:False
+
+            Label:
+                markup: True
+                text: "[color=#8cfa8e]What is the square feet of living space? -->[/color]"
+            TextInput:
+                id: sqft_living
+                multiline:False
+
+            Label:
+                markup: True
+                text: "[color=#8cfa8e]What is the square feet of the lot? -->[/color]"
+            TextInput:
+                id: sqft_lot
+                multiline:False
+
+            Label:
+                markup: True
+                text: "[color=#8cfa8e]How many floors? -->[/color]"
+            TextInput:
+                id: floors
+                multiline:False
+
+            Label:
+                markup: True
+                text: "[color=#8cfa8e]Is this house on the waterfront? -->[/color]"
+            Spinner:
+                id: waterfront
+                text: 'select waterfront'
+                values: ['no', 'yes']
+
+
+            Label:
+                markup: True
+                text: "[color=#8cfa8e]Is there a view? -->[/color]"
+            Spinner:
+                id: view
+                text: 'select view'
+                values: ['none', 'somewhat', 'nice', 'very nice', 'beautiful']
+
+
+            Label:
+                markup: True
+                text: "[color=#8cfa8e]What is the condition of the house? -->[/color]"
+
+            Spinner:
+                id: condition
+                text: 'select condition'
+                values: ['very poor', 'poor', 'fair', 'good', 'very good']
+
+            Label:
+                markup: True
+                text: "[color=#8cfa8e]What is the level of construction/design? -->\n     (1 - 13) 1 = very poor, 13 = excellent[/color]"
+
+            TextInput:
+                id: grade
+                multiline: False
+
+            Label:
+                markup: True
+                text: "[color=#8cfa8e]What year was this house built? -->[/color]"
+            TextInput:
+                id: year_built
+                multiline:False
+
+            Label:
+                markup: True
+                text: "[color=#8cfa8e]What year was this house renovated? -->[/color]"
+            TextInput:
+                id: year_renovated
+                multiline:False
+
+            Label:
+                markup: True
+                text: "[color=#8cfa8e]What is the zip code for this property? -->[/color]"
+            TextInput:
+                id: zip
+                multiline:False
+
+            Button:
+                markup: True
+                text: '[color=#8cfa8e][b][size=15]Generate Price Quote[/size][/b][/color]'
+                spacing:10
+                on_press: root.process_values()
+            Label:
+                markup: True
+                id: pricequote
+                multiline:False
+                text: ''
+
+
+
+        Button:
+            markup: True
+            text: '[color=#8cfa8e]Go back[/color]'
+            pos_hint: {"x": 0.25}
+            size_hint_y: None
+            height: 50
+            size_hint_x: None
+            width: 200
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = 'right'
+
+        Button:
+            markup: True
+            text: '[color=#8cfa8e]Load previous values[/color]'
+            size_hint_y: None
+            height: 50
+            size_hint_x: None
+            width: 200
+            on_press: root.set_values()
+
+
+<DataKMeans>
+    name: 'kmeans'
+    variable1: variable1
+    variable2: variable2
+    num_clusters: num_clusters
+
+
+    FloatLayout:
+
+        GridLayout:
+            cols: 2
+            row_force_default: True
+            row_default_height: 250
+
+            Button:
+                id: elbow_button
+                size_hint: (None, None)
+                width: 400
+                height: 250
+                background_color: 0,0,0,0
+
+                Image:
+
+                    source: root.elbow
+                    size_hint: (None, None)
+                    width: 400
+                    height: 250
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+            Button:
+                id: cluster_button
+                size_hint: (None, None)
+                width: 400
+                height: 250
+                background_color: 0,0,0,0
+
+                Image:
+
+                    source: root.clusters
+                    size_hint: (None, None)
+                    width: 400
+                    height: 250
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+
+            Button:
+                id: scaled_cluster_button
+                size_hint: (None, None)
+                width: 400
+                height: 250
+                background_color: 0,0,0,0
+
+                Image:
+
+                    source: root.scaled_clusters
+                    size_hint: (None, None)
+                    width: 400
+                    height: 250
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+            Button:
+                id: centroids_button
+                size_hint: (None, None)
+                width: 400
+                height: 250
+                background_color: 0,0,0,0
+
+                Image:
+
+                    source: root.centroids
+                    size_hint: (None, None)
+                    width: 400
+                    height: 250
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+        Button:
+            markup: True
+            text: '[color=#8cfa8e]Go back[/color]'
+            size_hint: (None, None)
+            width: 150
+            height: 50
+            pos_hint: {'x': 0}
+            on_release:
+                app.root.current = "data"
+                root.manager.transition.direction = 'right'
+
+        Spinner:
+            id: variable1
+            text: 'choose variable 1'
+            values: ['price', 'bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot', 'floors', 'view', 'condition', 'grade', 'yr_built', 'yr_renovated', 'zipcode']
+            size_hint: (None, None)
+            width: 150
+            height: 50
+            pos_hint: {'x': 0.2}
+
+        Spinner:
+            id: variable2
+            text: 'choose variable 2'
+            values: ['price', 'bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot', 'floors', 'view', 'condition', 'grade', 'yr_built', 'yr_renovated', 'zipcode']
+            size_hint: (None, None)
+            width: 150
+            height: 50
+            pos_hint: {'x': 0.4}
+        Spinner:
+            id: num_clusters
+            text: 'choose # of clusters'
+            values: ['2', '3', '4', '5', '6']
+            size_hint: (None, None)
+            width: 150
+            height: 50
+            pos_hint: {'x': 0.6}
+
+        Button:
+            markup: True
+            text: '[color=#8cfa8e]Create clusters[/color]'
+            size_hint: (None, None)
+            width: 150
+            height: 50
+            pos_hint: {'x': 0.8}
+            on_release:
+                root.evaluate()
+
+
+
+<TrainModel>
+    name: 'train'
+
+    saved_label: saved_label
+    accuracy_label: accuracy_label
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'app_images/waterhouse.jpg'
+
+    FloatLayout:
+
+        Button:
+            text: 'Click here to train a new model'
+            size_hint: (None, None)
+            width: 250
+            height: 50
+            center_x: self.parent.center_x
+            pos_hint: {'y': 0.75}
+            on_release:
+                root.set_training_label()
+
+
+
+        Label:
+
+            text: root.training_label
+            font_size: 17
+
+            size_hint: (None, None)
+            width: 250
+            height: 50
+            center_x: self.parent.center_x
+            pos_hint: {'y': 0.65}
+            background_color: 0,0,0,0
+        Label:
+            id: saved_label
+            text: ''
+            font_size: 17
+            font: 'Arial'
+
+            size_hint: (None, None)
+            width: 250
+            height: 50
+            center_x: self.parent.center_x
+            pos_hint: {'y': 0.55}
+            background_color: 0,0,0,0
+        Label:
+            id: accuracy_label
+            text: ''
+            font_size: 21
+
+            size_hint: (None, None)
+            width: 250
+            height: 50
+            center_x: self.parent.center_x
+            pos_hint: {'y': 0.45}
+            background_color: 0,0,0,0
+
+        Button:
+            markup: True
+            text: '[color=#8cfa8e]Go back[/color]'
+            size_hint: (None, None)
+            width: 200
+            height: 50
+            pos: 0, 0
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = 'right'
+
+
+
+<DataExplorer>
+    name: 'data'
+
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+        padding: 50
+        spacing: 20
+        Image:
+            id: display
+            size_hint_y: None
+            height: 500
+            size_hint_x: None
+            width: 700
+
+            source: "data_images/Price by square footage.png"
+        Spinner:
+            id: illustrations
+            markup: True
+            text: '[color=#8cfa8e]Select Descriptive View[/color]'
+            size_hint_y: None
+            height: 50
+            size_hint_x: None
+            width: 200
+            pos_hint: {'x': 0, 'y': 0.8}
+            values: ['bedroom count', 'grade count', 'bathroom count', 'Price by square footage', 'Average price per condition', 'Average price per grade', 'Average price per view']
+            on_text:
+                root.set_image()
+
+
+            Button:
+                markup: True
+                text: '[color=#8cfa8e]Go back[/color]'
+                size_hint: (None, None)
+                width: 200
+                height: 50
+                pos: 50, 0
+                on_release:
+                    app.root.current = "main"
+                    root.manager.transition.direction = 'right'
+            Button:
+                markup: True
+                text: '[color=#8cfa8e]K-Means clustering[/color]'
+                size_hint: (None, None)
+                width: 200
+                height: 50
+                pos: 500, 0
+                on_release:
+                    app.root.current = "kmeans"
+                    root.manager.transition.direction = 'left'
+
+
+
+
+
