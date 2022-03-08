@@ -1,1 +1,1 @@
-# Serenity-Homes[Task2paper.docx](https://github.com/matthewleyden7/Serenity-Homes/files/8208539/Task2paper.docx)
+Serenity Homes is a simple machine learning project that determine the price of a new home in the Seattle area based on a number of factors using real world data.
